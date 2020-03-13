@@ -8,32 +8,38 @@
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-  <div id="app" v-bind:style="{ background: '#' + color }">
-    <img v-on:mouseover="toggleShowPrices" v-on:mouseout="toggleShowPrices" v-bind:src="img" v-bind:alt="name">
-    <h1 v-bind:class="changePercent > 0 ? 'green': 'red'"> 
-      {{title}}
-      <span v-if="changePercent > 0">😎</span>
-      <span v-else-if="changePercent < 0">😢</span>
-      <span v-else>🤞</span>
-      
-      <span v-on:click="toggleShowPrices">
-        {{showPrices ? '🐵': '🙈'}}
-      </span>
+  <div id="app">
+    <h1>
+      Mis Cursos de Platzi💚
     </h1>
-
-    <input type="number" v-model="value">
-    <span> {{convertedValue}} </span>
-
-
-    <ul v-show="showPrices">
-      <li
-        class="uppercase"
-        v-bind:class="{orange: p.value == price, red: p.value < price, green: p.value > price}" 
-        v-for="(p, index) in pricesWithDays" 
-        v-bind:key="p.day">
-        {{index + 1}} | {{p.day}} 👉 ${{p.value}}
-      </li>
-    </ul>
+      <p>
+        <input type="text" placeholder="Titulo del curso" v-model="title"/>
+      </p>
+      <p>
+        <input type="number" placeholder="Horas" v-model="time" />
+      </p>
+      <p>
+        <button v-on:click="addCourse">Guardar Curso</button>
+      </p>
+    </fieldset>
+    <div>
+      <h3>Lista de Cursos</h3>
+      <p class="red" v-if="totalTime <= 0">Aun no has realizado cursos</p>
+      <p class="red" v-else v-bind:class="{blue: totalTime > 0}">Total de horas</p>
+      <div>
+        <ol>
+          <!-- Lista de cursos -->
+          <li v-for="(course, index) in courses" v-bind:value="course.index">
+            {{ course.title }} => {{ course.time }} Horas
+          </li>
+        </ol>
+        <hr/>
+        <p>
+          Llevo <strong>{{ totalTime }}</strong> horas aprendiendo en Platzi.
+          <b>#NuncaParesDeAprender 💚</b>
+        </p>
+      </div>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
